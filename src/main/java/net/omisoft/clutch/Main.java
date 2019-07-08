@@ -20,7 +20,7 @@ public class Main {
     public static final String CLUTCH = "https://clutch.co";
 
     public static void main(String[] args) {
-        parseSingleCategory("https://clutch.co/web-developers");
+        parseSingleCategory("https://clutch.co/agencies/financial-services");
     }
 
     private static void parseReviewers(String url) {
@@ -29,7 +29,7 @@ public class Main {
         reviewers.forEach(e -> System.out.println(e.text()));
     }
 
-    private static List<Reviewer> parseReviewersNew(String url) {
+    public static List<Reviewer> parseReviewersNew(String url) {
         Document doc = createPageDocument(url);
         Elements reviewers = doc.select("div.review-mobile-reviewer2-text");
 
@@ -47,7 +47,10 @@ public class Main {
         try {
             return Jsoup
                     .connect(url)
-                    .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36")
+//                    .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36")
+                    .ignoreContentType(true)
+                    .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0")
+                    .referrer("http://www.google.com")
                     .timeout(1000000)
                     .get();
         } catch (IOException e) {

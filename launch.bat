@@ -1,0 +1,1 @@
+java -jar clutch-parser-1.0-SNAPSHOT.jar
