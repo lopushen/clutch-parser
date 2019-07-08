@@ -9,5 +9,7 @@ public class Reviewer {
     private String title;
     private String verified;
     private String url;
+    private String project;
     private String projectSummary;
+    private String feedBackSummary;
 }

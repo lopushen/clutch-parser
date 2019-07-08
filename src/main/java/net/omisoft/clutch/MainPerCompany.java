@@ -16,16 +16,17 @@ import java.util.stream.Stream;
 
 
 public class MainPerCompany {
-    private static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    private static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
 
     public static void main(String[] args) {
         String fileName = "companies.txt";
         File csvOutputFile = new File("Clutch_report_" + sdf.format(new Date()));
         try (Stream<String> stream = Files.lines(Paths.get(fileName));
              PrintWriter pw = new PrintWriter(csvOutputFile)) {
-            pw.print("Link,Project,Project Summary,Reviewer Title,Reviewer Name");
+            pw.println("Link,Project,Project Summary,Reviewer Title,Reviewer Name,Feedback Summary");
             List<Reviewer> reviewers = stream.map(Main::parseReviewersNew).flatMap(Collection::stream)
-                    .peek(r -> pw.print(Stream.of(r.getUrl(), r.getProjectSummary(), r.getTitle(), r.getName()).collect(Collectors.joining(","))))
+                    .peek(r -> pw.println(Stream.of(r.getUrl(),r.getProject(), r.getProjectSummary(), r.getTitle(),
+                            r.getName(), r.getFeedBackSummary()).collect(Collectors.joining(","))))
                     .collect(Collectors.toList());
 
         } catch (IOException e) {

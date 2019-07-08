@@ -31,13 +31,19 @@ public class Main {
 
     public static List<Reviewer> parseReviewersNew(String url) {
         Document doc = createPageDocument(url);
-        Elements reviewers = doc.select("div.review-mobile-reviewer2-text");
+//        Elements reviewers = doc.select("div.review-mobile-reviewer2-text");
+        Elements reviewers = doc.select("div[property=review]");
 
         return reviewers.stream().map(e -> {
             Reviewer reviewer = new Reviewer();
             reviewer.setName(e.select("div[class=field field-name-field-fdb-full-name-display field-type-text field-label-hidden]").text());
             reviewer.setTitle(e.select("div[class=field field-name-field-fdb-title field-type-text field-label-hidden]").text());
-            reviewer.setVerified(e.select("div[class=class=field field-name-field-fdb-verified field-type-list-text field-label-hidden field-label-inline clearfix]").text());
+            reviewer.setVerified(e.select("div[class=field field-name-field-fdb-verified field-type-list-text field-label-hidden field-label-inline clearfix]").text());
+            reviewer.setProjectSummary(e.select("div[class=field field-name-field-fdb-proj-description field-type-text-long field-label-inline clearfix]").text());
+            Elements projectDetail = e.select("a[class=inner_url]");
+            reviewer.setProject(projectDetail.text());
+            reviewer.setUrl(CLUTCH + projectDetail.attr("href"));
+            reviewer.setFeedBackSummary(e.select("div[class=field field-name-field-fdb-comments field-type-text field-label-inline clearfix]").text());
             System.out.println(reviewer);
             return reviewer;
         }).collect(Collectors.toList());
