@@ -31,7 +31,6 @@ public class Main {
 
     public static List<Reviewer> parseReviewersNew(String url) {
         Document doc = createPageDocument(url);
-//        Elements reviewers = doc.select("div.review-mobile-reviewer2-text");
         Elements reviewers = doc.select("div[property=review]");
 
         return reviewers.stream().map(e -> {
